@@ -1,6 +1,16 @@
--- Wait for Player's PlayerGui to be ready
+-- Ensure the player and PlayerGui are correctly retrieved
 local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+local playerGui = player and player:WaitForChild("PlayerGui")
+
+if not player then
+    warn("Player not found!")
+    return -- Exit if no player found
+end
+
+if not playerGui then
+    warn("PlayerGui not found!")
+    return -- Exit if no PlayerGui found
+end
 
 -- Function to initialize the GUI
 local function initializeGui()
@@ -43,13 +53,13 @@ local function initializeGui()
     titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
     titleLabel.Position = UDim2.new(0, 0, 0, 0)
     titleLabel.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    titleLabel.Text = "Imnotexploi4's Executor V0.3"
-    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.Text = "Imnotexploi4's Executor V0.3"titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     titleLabel.TextScaled = true
 
     -- Pages Frame
     local pages = Instance.new("Frame", executorFrame)
-    pages.Size = UDim2.new(1, 0, 0.1, 0) pages.Position = UDim2.new(0, 0, 0.1, 0)
+    pages.Size = UDim2.new(1, 0, 0.1, 0)
+    pages.Position = UDim2.new(0, 0, 0.1, 0)
     pages.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 
     local page1Button = Instance.new("TextButton", pages)
@@ -98,12 +108,11 @@ local function initializeGui()
     codeBox1.TextScaled = true
     codeBox1.Text = "Enter your script here"
     codeBox1.ClearTextOnFocus = true
-    codeBox1.MultiLine = true
-
-    local executeButton1 = Instance.new("TextButton", page1)
+    codeBox1.MultiLine = true local executeButton1 = Instance.new("TextButton", page1)
     executeButton1.Size = UDim2.new(0.4, 0, 0.1, 0)
     executeButton1.Position = UDim2.new(0.3, 0, 0.7, 0)
-    executeButton1.Text = "Execute"executeButton1.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    executeButton1.Text = "Execute"
+    executeButton1.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
     executeButton1.TextScaled = true
 
     local copyButton1 = Instance.new("TextButton", page1)
@@ -147,13 +156,13 @@ local function initializeGui()
     saveButton1.MouseButton1Click:Connect(function()
         local savedScripts = player:FindFirstChild("SavedScripts")
         if not savedScripts then
-            savedScripts = Instance.new("Folder")
-            savedScripts.Name = "SavedScripts"
+            savedScripts = Instance.new("Folder") savedScripts.Name = "SavedScripts"
             savedScripts.Parent = player
         end
 
         local newScript = Instance.new("StringValue")
-        newScript.Name = "Script_" .. os.time() newScript.Value = codeBox1.Text
+        newScript.Name = "Script_" .. os.time()
+        newScript.Value = codeBox1.Text
         newScript.Parent = savedScripts
         print("Script saved successfully")
     end)
@@ -196,12 +205,13 @@ local function initializeGui()
     pasteButton2.BackgroundColor3 = Color3.fromRGB(255, 150, 0)
     pasteButton2.TextScaled = true
 
-    local saveButton2 = Instance.new("TextButton", page2)
-    saveButton2.Size = UDim2.new(0.4, 0, 0.1, 0)
+    local saveButton2 = Instance.new("TextButton", page2) saveButton2.Size = UDim2.new(0.4, 0, 0.1, 0)
     saveButton2.Position = UDim2.new(0.3, 0, 0.82, 0)
     saveButton2.Text = "Save Script"
     saveButton2.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
-    saveButton2.TextScaled = true local function executeScript2()
+    saveButton2.TextScaled = true
+
+    local function executeScript2()
         local script = codeBox2.Text
         local success, errorMessage = pcall(function()
             loadstring(script)()
@@ -249,11 +259,11 @@ local function initializeGui()
     consoleFrame.Active = true
     consoleFrame.Draggable = true
 
-    local consoleTitleBar = Instance.new("TextLabel", consoleFrame)
-    consoleTitleBar.Size = UDim2.new(0.9, 0, 0.2, 0)
+    local consoleTitleBar = Instance.new("TextLabel", consoleFrame) consoleTitleBar.Size = UDim2.new(0.9, 0, 0.2, 0)
     consoleTitleBar.Position = UDim2.new(0, 0, 0, 0)
     consoleTitleBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    consoleTitleBar.Text = "Output Console"consoleTitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+    consoleTitleBar.Text = "Output Console"
+    consoleTitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
     consoleTitleBar.TextScaled = true
 
     local closeButton = Instance.new("TextButton", consoleFrame)
@@ -290,6 +300,10 @@ local function initializeGui()
     local function printToConsole(message)
         consoleOutput.Text = consoleOutput.Text .. "
 " .. message
+        -- Ensure the last line is visible
+        consoleOutput:CaptureFocus()
+        consoleOutput.TextXAlignment = Enum.TextXAlignment.Left
+        consoleOutput:ReleaseFocus()
     end
 
     -- Overriding default print, warn, and error functions
