@@ -250,7 +250,7 @@ local function initializeGui()
     consoleFrame.Draggable = true
 
     local consoleTitleBar = Instance.new("TextLabel", consoleFrame)
-    consoleTitleBar.Size = UDim2.new(1, 0, 0.2, 0)
+    consoleTitleBar.Size = UDim2.new(0.9, 0, 0.2, 0)
     consoleTitleBar.Position = UDim2.new(0, 0, 0, 0)
     consoleTitleBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     consoleTitleBar.Text = "Output Console"
@@ -273,6 +273,7 @@ local function initializeGui()
     consoleOutput.ClearTextOnFocus = false
     consoleOutput.TextWrapped = true
     consoleOutput.TextYAlignment = Enum.TextYAlignment.Top
+    consoleOutput.RichText = true
 
     closeButton.MouseButton1Click:Connect(function()
         consoleFrame.Visible = false
@@ -316,8 +317,7 @@ local function initializeGui()
         page1.Visible = true
         page2.Visible = false
     end
-
-    local function switchToPage2() 
+    local function switchToPage2()
         page1.Visible = false
         page2.Visible = true
     end
