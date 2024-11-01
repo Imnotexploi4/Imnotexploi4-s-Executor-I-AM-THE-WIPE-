@@ -334,6 +334,7 @@ initializeGui()
 
 -- Reinitialize the GUI when the player respawns
 player.CharacterAdded:Connect(function()
-    wait(1) -- Wait a moment to ensure the character is fully loaded
+    wait(1)
+-- Wait a moment to ensure the character is fully loaded
     initializeGui()
 end)
