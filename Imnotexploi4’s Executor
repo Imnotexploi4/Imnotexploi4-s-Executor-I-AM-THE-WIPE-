@@ -1,3 +1,4 @@
+-- Wait for Player's PlayerGui to be ready
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
@@ -48,8 +49,8 @@ local function initializeGui()
 
     -- Pages Frame
     local pages = Instance.new("Frame", executorFrame)
-    pages.Size = UDim2.new(1, 0, 0.1, 0)
-    pages.Position = UDim2.new(0, 0, 0.1, 0) pages.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    pages.Size = UDim2.new(1, 0, 0.1, 0) pages.Position = UDim2.new(0, 0, 0.1, 0)
+    pages.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 
     local page1Button = Instance.new("TextButton", pages)
     page1Button.Size = UDim2.new(0.5, 0, 1, 0)
@@ -102,8 +103,8 @@ local function initializeGui()
     local executeButton1 = Instance.new("TextButton", page1)
     executeButton1.Size = UDim2.new(0.4, 0, 0.1, 0)
     executeButton1.Position = UDim2.new(0.3, 0, 0.7, 0)
-    executeButton1.Text = "Execute"
-    executeButton1.BackgroundColor3 = Color3.fromRGB(0, 255, 0) executeButton1.TextScaled = true
+    executeButton1.Text = "Execute"executeButton1.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    executeButton1.TextScaled = true
 
     local copyButton1 = Instance.new("TextButton", page1)
     copyButton1.Size = UDim2.new(0.2, 0, 0.1, 0)
@@ -152,9 +153,9 @@ local function initializeGui()
         end
 
         local newScript = Instance.new("StringValue")
-        newScript.Name = "Script_" .. os.time()
-        newScript.Value = codeBox1.Text
-        newScript.Parent = savedScripts print("Script saved successfully")
+        newScript.Name = "Script_" .. os.time() newScript.Value = codeBox1.Text
+        newScript.Parent = savedScripts
+        print("Script saved successfully")
     end)
 
     -- Page 2 Content (similar to Page 1)
@@ -200,10 +201,9 @@ local function initializeGui()
     saveButton2.Position = UDim2.new(0.3, 0, 0.82, 0)
     saveButton2.Text = "Save Script"
     saveButton2.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
-    saveButton2.TextScaled = true
-
-    local function executeScript2()
-        local script = codeBox2.Text local success, errorMessage = pcall(function()
+    saveButton2.TextScaled = true local function executeScript2()
+        local script = codeBox2.Text
+        local success, errorMessage = pcall(function()
             loadstring(script)()
         end)
 
@@ -253,9 +253,10 @@ local function initializeGui()
     consoleTitleBar.Size = UDim2.new(0.9, 0, 0.2, 0)
     consoleTitleBar.Position = UDim2.new(0, 0, 0, 0)
     consoleTitleBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    consoleTitleBar.Text = "Output Console"
-    consoleTitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
-    consoleTitleBar.TextScaled = true local closeButton = Instance.new("TextButton", consoleFrame)
+    consoleTitleBar.Text = "Output Console"consoleTitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+    consoleTitleBar.TextScaled = true
+
+    local closeButton = Instance.new("TextButton", consoleFrame)
     closeButton.Size = UDim2.new(0.1, 0, 0.2, 0)
     closeButton.Position = UDim2.new(0.9, 0, 0, 0)
     closeButton.Text = "X"
@@ -267,13 +268,15 @@ local function initializeGui()
     consoleOutput.Position = UDim2.new(0, 0, 0.2, 0)
     consoleOutput.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     consoleOutput.TextColor3 = Color3.fromRGB(255, 255, 255)
-    consoleOutput.TextScaled = true
+    consoleOutput.TextScaled = false
+    consoleOutput.Font = Enum.Font.Code
     consoleOutput.MultiLine = true
     consoleOutput.Text = "Output will be shown here..."
     consoleOutput.ClearTextOnFocus = false
     consoleOutput.TextWrapped = true
     consoleOutput.TextYAlignment = Enum.TextYAlignment.Top
     consoleOutput.RichText = true
+    consoleOutput.ReadOnly = true -- Ensuring the text is not editable
 
     closeButton.MouseButton1Click:Connect(function()
         consoleFrame.Visible = false
@@ -317,6 +320,7 @@ local function initializeGui()
         page1.Visible = true
         page2.Visible = false
     end
+
     local function switchToPage2()
         page1.Visible = false
         page2.Visible = true
@@ -334,7 +338,6 @@ initializeGui()
 
 -- Reinitialize the GUI when the player respawns
 player.CharacterAdded:Connect(function()
-    wait(1)
--- Wait a moment to ensure the character is fully loaded
+    wait(1) -- Wait a moment to ensure the character is fully loaded
     initializeGui()
 end)
