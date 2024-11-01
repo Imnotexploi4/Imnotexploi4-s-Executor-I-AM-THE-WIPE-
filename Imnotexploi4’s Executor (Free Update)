@@ -47,7 +47,7 @@ local function initializeGui()
     titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
     titleLabel.Position = UDim2.new(0, 0, 0, 0)
     titleLabel.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    titleLabel.Text = "Imnotexploi4's Executor V0.5"
+    titleLabel.Text = "Imnotexploi4's Executor V0.6"
     titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     titleLabel.TextScaled = true
 
@@ -277,7 +277,7 @@ local function initializeGui()
     resetButton.MouseButton1Click:Connect(resetPlayer)
 
     -- Print welcome message
-    print("Hello, " .. player.Name .. ", Welcome to Imnotexploi4's Executor V0.5!")
+    print("Hello, " .. player.Name .. ", Welcome to Imnotexploi4's Executor V0.6!")
 end
 
 -- Initialize the GUI when the script runs
